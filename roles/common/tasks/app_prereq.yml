@@ -1,30 +1,22 @@
-APP_PREREQ () {
+- name:  Adding Application User
+  ansible.builtin.user:
+    name: roboshop
 
-  PRINT Adding Application User
-  id roboshop &>>$LOG_FILE
-  if [ $? -ne 0 ]; then
-  useradd roboshop &>>$LOG_FILE
-  fi
-  STAT $?
+- name:  remove Old Content
+  ansible.builtin.file:
+    path: "{{ app_path }}"
+    state: absent
 
-  PRINT remove Old Content
-  rm -rf ${app_path} &>>$LOG_FILE
-  STAT $?
+- name:  Create App directory
+  ansible.builtin.file:
+    path: "{{ app_path }}"
+    state: directory
 
-  PRINT Create App directory
-  mkdir ${app_path} &>>$LOG_FILE
-  STAT $?
+#- name:  Download and extract App
+#  ansible.builtin.unarchive:
+#    src: https://roboshop-artifacts.s3.amazonaws.com/{{component}}-v3.zip
+#    dest: "{{ app_path}}"
+#    remote_src: yes
 
-  PRINT Download App Content
-  if [ "$component" == "dispatch" ]; then
-  curl -L -o /tmp/${component}.zip https://roboshop-artifacts.s3.amazonaws.com/${component}.zip &>>$LOG_FILE
-  else
-  curl -L -o /tmp/${component}.zip https://roboshop-artifacts.s3.amazonaws.com/${component}-v3.zip &>>$LOG_FILE
-  fi
-  STAT $?
 
-  PRINT Extract App Content
-  cd ${app_path}
-  unzip /tmp/${component}.zip &>>$LOG_FILE
-  STAT $?
-}
+
