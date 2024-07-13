@@ -12,11 +12,11 @@
     path: "{{ app_path }}"
     state: directory
 
-#- name:  Download and extract App
-#  ansible.builtin.unarchive:
-#    src: https://roboshop-artifacts.s3.amazonaws.com/{{component}}-v3.zip
-#    dest: "{{ app_path}}"
-#    remote_src: yes
+- name:  Download and extract App
+  ansible.builtin.unarchive:
+    src: https://roboshop-artifacts.s3.amazonaws.com/{{component}}-v3.zip
+    dest: "{{ app_path}}"
+    remote_src: yes
 
 
 
