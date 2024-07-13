@@ -1,5 +1,6 @@
 - name: run ansible-playbook
   hosts: all
+  become: true
   roles:
       - "{{ role_name }}"
 
