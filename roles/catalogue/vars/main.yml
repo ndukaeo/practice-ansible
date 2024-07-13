@@ -1,0 +1,6 @@
+component: catalogue
+app_path: /app
+schema: mongo
+#other variables to input at CLI
+#role_name, $1
+#env, $2
