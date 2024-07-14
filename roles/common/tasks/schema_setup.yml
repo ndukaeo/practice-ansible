@@ -24,7 +24,8 @@
 
     - name: Load schema, master data and app-user data
       ansible.builtin.shell: mysql -h mysql.{{ env }}.banecio-devops.online -uroot -pRoboShop@1 < /app/db/{{ item }}.sql
-      loop: "schema_files"
+      loop:
+        - "schema_files"
 
 
 #mysql -h mysql.dev.banecio-devops.online -uroot -pRoboShop@1 < /app/db/schema.sql
