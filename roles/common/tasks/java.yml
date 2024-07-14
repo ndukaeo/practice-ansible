@@ -1,0 +1,29 @@
+- name:  Install Maven which includes Java
+  ansible.builtin.dnf:
+    name: maven
+    state: latest
+
+- name: run app prerequisites
+  ansible.builtin.include_role:
+    name: common
+    tasks_from: app_prereq
+
+- name: Download maven and java Dependencies
+  ansible.builtin.shell: mvn clean package ; mv target/shipping-1.0.jar shipping.jar
+  args:
+    chdir: "{{ app_path }}"
+
+- name: set up schema
+  ansible.builtin.include_role:
+    name: common
+    tasks_from: schema_setup
+  when: schema is defined
+
+- name: systemd setup
+  ansible.builtin.include_role:
+    name: common
+    tasks_from: systemd_setup
+
+
+
+

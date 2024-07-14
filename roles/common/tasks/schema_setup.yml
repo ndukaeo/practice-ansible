@@ -14,6 +14,31 @@
     - name:  Load Master Data
       ansible.builtin.shell: mongosh --host mongo.{{ env }}.banecio-devops.online </app/db/master-data.js
 
+- name:  Load schema
+  when: schema == "mysql"
+  block:
+    - name:  Install mysql
+      ansible.builtin.dnf:
+        name: mysql
+        state: latest
+
+    - name: Load schema, mater data and app-user data
+      ansible.builtin.user: mysql -h mysql.{{ env }}.banecio-devops.online -uroot -pRoboShop@1 < /app/db/{{ item }}.sql
+      loop:
+        - schema
+        - master-data
+        - app-user
+
+
+#mysql -h mysql.dev.banecio-devops.online -uroot -pRoboShop@1 < /app/db/schema.sql
+#mysql -h mysql.dev.banecio-devops.online -uroot -pRoboShop@1 < /app/db/master-data.sql
+#mysql -h mysql.dev.banecio-devops.online -uroot -pRoboShop@1 < /app/db/app-user.sql
+
+
+
+
+
+
 #- name: Load MySQL schema
 #  when: schema == "mysql"
 #  block:
