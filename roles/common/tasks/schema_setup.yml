@@ -1,5 +1,5 @@
 - name:  Load schema
-  when: schema == "mongo"
+  when: schema_type == "mongo"
   block:
     - name:  Copy MongoDB repo file
       ansible.builtin.template:
@@ -15,7 +15,7 @@
       ansible.builtin.shell: mongosh --host mongo.{{ env }}.banecio-devops.online </app/db/master-data.js
 
 - name:  Load schema
-  when: schema == "mysql"
+  when: schema_type == "mysql"
   block:
     - name:  Install mysql
       ansible.builtin.dnf:
@@ -24,10 +24,7 @@
 
     - name: Load schema, mater data and app-user data
       ansible.builtin.user: mysql -h mysql.{{ env }}.banecio-devops.online -uroot -pRoboShop@1 < /app/db/{{ item }}.sql
-      loop:
-        - "schema"
-        - "master-data"
-        - "app-user"
+      loop: "schema_files"
 
 
 #mysql -h mysql.dev.banecio-devops.online -uroot -pRoboShop@1 < /app/db/schema.sql

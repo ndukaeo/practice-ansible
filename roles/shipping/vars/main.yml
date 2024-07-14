@@ -1,6 +1,11 @@
 component: shipping
 app_path: /app
-schema: mysql
+schema_type: mysql
+schema_files:
+  - schema
+  - master-data
+  - app-user
+
 #other variables to input at CLI
 #role_name, $1
 #env, $2
