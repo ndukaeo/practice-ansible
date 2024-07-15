@@ -1,6 +1,5 @@
-- name: run nodejs
+- name: run python
   ansible.builtin.include_role:
     name: common
-    tasks_from: nodejs
-
+    tasks_from: python
 
